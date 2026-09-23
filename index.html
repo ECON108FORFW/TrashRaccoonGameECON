@@ -105,29 +105,163 @@ function drawCircle(x, y, r, fill, stroke=null, lineWidth=1) {
   }
 }
 
-function drawBackground() {
+function drawSky() {
   ctx.fillStyle = "#9f9988";
   ctx.fillRect(0, 0, canvas.width, 215);
 
   ctx.fillStyle = "rgba(218,210,192,0.16)";
   ctx.fillRect(0, 0, canvas.width, 120);
+}
 
-  ctx.fillStyle = "#676158";
-  [
+function drawBuildings() {
+  const buildings = [
     [0,170,95,45],[130,140,80,75],[245,175,135,40],
     [420,145,95,70],[560,182,115,33],[710,150,70,65],[810,130,90,85]
-  ].forEach(b => ctx.fillRect(...b));
+  ];
 
+  ctx.fillStyle = "#676158";
+  buildings.forEach(([x, y, w, h]) => {
+    ctx.fillRect(x, y, w, h);
+
+    // windows / building lights
+    ctx.fillStyle = "#d7bf76";
+    const cols = Math.max(2, Math.floor(w / 24));
+    const rows = Math.max(1, Math.floor(h / 20));
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if ((r + c) % 2 === 0) {
+          const wx = x + 8 + c * 18;
+          const wy = y + 8 + r * 16;
+          if (wx + 8 < x + w && wy + 8 < y + h) {
+            ctx.fillRect(wx, wy, 8, 8);
+          }
+        }
+      }
+    }
+    ctx.fillStyle = "#676158";
+  });
+}
+
+function drawFence() {
+  const topY = 225;
+  const bottomY = 330;
+
+  // fence posts
+  ctx.strokeStyle = "#5b6266";
+  ctx.lineWidth = 2;
+  for (let x = 0; x <= canvas.width; x += 34) {
+    ctx.beginPath();
+    ctx.moveTo(x, topY);
+    ctx.lineTo(x, bottomY);
+    ctx.stroke();
+  }
+
+  // top rail
+  ctx.strokeStyle = "#6d7478";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(0, topY + 4);
+  ctx.lineTo(canvas.width, topY + 4);
+  ctx.stroke();
+
+  // chain-link diagonals
+  ctx.strokeStyle = "rgba(185, 195, 198, 0.34)";
+  ctx.lineWidth = 1;
+  for (let x = -120; x < canvas.width + 120; x += 20) {
+    ctx.beginPath();
+    ctx.moveTo(x, bottomY);
+    ctx.lineTo(x + 120, topY);
+    ctx.stroke();
+  }
+  for (let x = -120; x < canvas.width + 120; x += 20) {
+    ctx.beginPath();
+    ctx.moveTo(x, topY);
+    ctx.lineTo(x + 120, bottomY);
+    ctx.stroke();
+  }
+}
+
+function drawStreetlight(x, baseY, h) {
+  ctx.strokeStyle = "#44484c";
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(x, baseY);
+  ctx.lineTo(x + 6, baseY - h);
+  ctx.stroke();
+
+  // crooked arm
+  ctx.beginPath();
+  ctx.moveTo(x + 6, baseY - h);
+  ctx.lineTo(x + 28, baseY - h - 10);
+  ctx.stroke();
+
+  // lamp head
+  ctx.fillStyle = "#5e6266";
+  ctx.beginPath();
+  ctx.moveTo(x + 24, baseY - h - 8);
+  ctx.lineTo(x + 38, baseY - h - 10);
+  ctx.lineTo(x + 34, baseY - h + 4);
+  ctx.lineTo(x + 22, baseY - h + 1);
+  ctx.closePath();
+  ctx.fill();
+
+  // subtle glow
+  ctx.fillStyle = "rgba(230, 220, 155, 0.13)";
+  ctx.beginPath();
+  ctx.moveTo(x + 18, baseY - h + 4);
+  ctx.lineTo(x + 52, baseY - h + 4);
+  ctx.lineTo(x + 38, baseY - h + 42);
+  ctx.lineTo(x + 10, baseY - h + 42);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawGroundBase() {
   ctx.fillStyle = "#71624f";
   ctx.fillRect(0, 215, canvas.width, 335);
+}
 
-  drawPile(90, 385, 230, 120);
-  drawPile(330, 355, 250, 130);
-  drawPile(610, 375, 260, 125);
+function drawPile(x, y, w, h) {
+  ctx.fillStyle = "#5a5347";
+  ctx.beginPath();
+  ctx.moveTo(x, y + h);
+  ctx.quadraticCurveTo(x + w * 0.15, y + h * 0.18, x + w * 0.45, y + h * 0.32);
+  ctx.quadraticCurveTo(x + w * 0.74, y - h * 0.10, x + w, y + h);
+  ctx.closePath();
+  ctx.fill();
 
-  for (let i = 0; i < 34; i++) {
-    let x = 18 + (i * 51) % 860;
-    let y = 265 + ((i * 47) % 250);
+  // embedded details
+  drawCircle(x + w * 0.18, y + h * 0.74, 12, "#242424", "#111", 2);
+  drawCircle(x + w * 0.18, y + h * 0.74, 5, "#666");
+  drawCircle(x + w * 0.72, y + h * 0.66, 10, "#242424", "#111", 2);
+  drawCircle(x + w * 0.72, y + h * 0.66, 4, "#666");
+
+  ctx.fillStyle = "#7a8588";
+  ctx.fillRect(x + w * 0.30, y + h * 0.68, 24, 9);
+  ctx.fillRect(x + w * 0.58, y + h * 0.44, 30, 10);
+
+  ctx.fillStyle = "#8b6741";
+  ctx.fillRect(x + w * 0.46, y + h * 0.72, 28, 18);
+  ctx.strokeStyle = "#5f452d";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x + w * 0.46, y + h * 0.72, 28, 18);
+
+  ctx.fillStyle = "#525252";
+  ctx.fillRect(x + w * 0.10, y + h * 0.48, 34, 7);
+  ctx.fillRect(x + w * 0.80, y + h * 0.54, 28, 7);
+}
+
+function drawMiddleGround() {
+  // junk piles are now further back in the middle ground
+  drawPile(70, 300, 200, 92);
+  drawPile(285, 282, 230, 104);
+  drawPile(560, 296, 235, 96);
+}
+
+function drawForegroundTexture() {
+  for (let i = 0; i < 28; i++) {
+    let x = 18 + (i * 57) % 860;
+    let y = 355 + ((i * 47) % 160);
 
     if (i % 4 === 0) {
       ctx.fillStyle = "#4a443d";
@@ -151,7 +285,7 @@ function drawBackground() {
 
   ctx.strokeStyle = "#635440";
   ctx.lineWidth = 3;
-  for (let y = 290; y < 545; y += 42) {
+  for (let y = 360; y < 545; y += 42) {
     ctx.beginPath();
     ctx.moveTo(0, y);
     ctx.lineTo(canvas.width, y + 12);
@@ -159,33 +293,16 @@ function drawBackground() {
   }
 }
 
-function drawPile(x, y, w, h) {
-  ctx.fillStyle = "#5a5347";
-  ctx.beginPath();
-  ctx.moveTo(x, y + h);
-  ctx.quadraticCurveTo(x + w * 0.15, y + h * 0.15, x + w * 0.45, y + h * 0.30);
-  ctx.quadraticCurveTo(x + w * 0.75, y - h * 0.10, x + w, y + h);
-  ctx.closePath();
-  ctx.fill();
-
-  drawCircle(x + w * 0.18, y + h * 0.72, 16, "#242424", "#111", 3);
-  drawCircle(x + w * 0.18, y + h * 0.72, 7, "#666");
-  drawCircle(x + w * 0.70, y + h * 0.62, 14, "#242424", "#111", 3);
-  drawCircle(x + w * 0.70, y + h * 0.62, 6, "#666");
-
-  ctx.fillStyle = "#7a8588";
-  ctx.fillRect(x + w * 0.30, y + h * 0.64, 32, 12);
-  ctx.fillRect(x + w * 0.55, y + h * 0.40, 42, 12);
-
-  ctx.fillStyle = "#8b6741";
-  ctx.fillRect(x + w * 0.44, y + h * 0.70, 38, 24);
-  ctx.strokeStyle = "#5f452d";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(x + w * 0.44, y + h * 0.70, 38, 24);
-
-  ctx.fillStyle = "#525252";
-  ctx.fillRect(x + w * 0.08, y + h * 0.45, 45, 9);
-  ctx.fillRect(x + w * 0.78, y + h * 0.52, 38, 9);
+function drawBackground() {
+  drawSky();
+  drawBuildings();
+  drawStreetlight(90, 285, 92);
+  drawStreetlight(350, 280, 106);
+  drawStreetlight(640, 288, 98);
+  drawFence();
+  drawGroundBase();
+  drawMiddleGround();
+  drawForegroundTexture();
 }
 
 function drawTrashBag(o, hover) {
