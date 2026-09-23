@@ -371,7 +371,7 @@ function styleAndModifyGame() {
   function advanceGameTime() {
     elapsedGameHours += 2;
     updateTimeStat();
-    if (elapsedGameHours > 0 && timeValue.textContent === '7:00 PM') {
+    if (elapsedGameHours >= 12 && timeValue.textContent === '7:00 AM') {
       showEndOfNight();
     }
   }
