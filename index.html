@@ -27,6 +27,7 @@ function styleAndModifyGame() {
       gap:12px;
       flex-wrap:wrap;
       margin-bottom:12px;
+      position:relative;
     }
     .bubble {
       background:#efe5c7;
@@ -34,6 +35,8 @@ function styleAndModifyGame() {
       border:3px solid #4d4336;
       border-radius:24px;
       box-shadow:0 4px 0 rgba(0,0,0,.25);
+      position:relative;
+      overflow:hidden;
     }
     .title-bubble {
       min-width:360px;
@@ -46,6 +49,8 @@ function styleAndModifyGame() {
       font-size:32px;
       line-height:1.1;
       color:#2c2418;
+      position:relative;
+      z-index:1;
     }
     .made-with-ai {
       margin-top:5px;
@@ -53,6 +58,8 @@ function styleAndModifyGame() {
       font-weight:bold;
       color:#5d5241;
       letter-spacing:.2px;
+      position:relative;
+      z-index:1;
     }
     .creator-bubble {
       padding:14px 18px;
@@ -61,10 +68,19 @@ function styleAndModifyGame() {
       text-align:center;
       margin-top:8px;
     }
+    .creator-bubble span,
+    .description-bubble > * {
+      position:relative;
+      z-index:1;
+    }
     #status {
       margin-top:10px;
       margin-bottom:8px;
       text-align:center;
+      position:relative;
+      overflow:hidden;
+      padding:8px 12px;
+      border-radius:16px;
     }
     .description-bubble {
       margin-top:0;
@@ -80,6 +96,46 @@ function styleAndModifyGame() {
       min-height:48px;
       color:#5d5241;
       line-height:1.4;
+    }
+
+    /* subtle glitter effect on UI only — canvas remains untouched */
+    .top-ui::before,
+    .bubble::before,
+    .bubble::after,
+    #status::before,
+    #status::after {
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background-repeat:no-repeat;
+    }
+    .top-ui::before {
+      background-image:
+        radial-gradient(circle at 10% 30%, rgba(255,255,255,.80) 0 1px, transparent 2px),
+        radial-gradient(circle at 30% 70%, rgba(255,244,200,.60) 0 1px, transparent 2px),
+        radial-gradient(circle at 55% 18%, rgba(255,255,255,.60) 0 1px, transparent 2px),
+        radial-gradient(circle at 78% 62%, rgba(255,244,200,.55) 0 1px, transparent 2px),
+        radial-gradient(circle at 92% 28%, rgba(255,255,255,.60) 0 1px, transparent 2px);
+      opacity:.22;
+    }
+    .bubble::before, #status::before {
+      background-image:
+        radial-gradient(circle at 12% 26%, rgba(255,255,255,.90) 0 1.2px, transparent 2.2px),
+        radial-gradient(circle at 34% 74%, rgba(255,246,210,.75) 0 1px, transparent 2px),
+        radial-gradient(circle at 68% 22%, rgba(255,255,255,.85) 0 1.1px, transparent 2px),
+        radial-gradient(circle at 86% 64%, rgba(255,240,190,.70) 0 1px, transparent 2px);
+      opacity:.30;
+    }
+    .bubble::after, #status::after {
+      background-image:
+        linear-gradient(45deg, transparent 48%, rgba(255,255,255,.70) 49%, rgba(255,255,255,.70) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(255,255,255,.70) 49%, rgba(255,255,255,.70) 51%, transparent 52%),
+        linear-gradient(45deg, transparent 48%, rgba(255,248,214,.60) 49%, rgba(255,248,214,.60) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(255,248,214,.60) 49%, rgba(255,248,214,.60) 51%, transparent 52%);
+      background-size:16px 16px,16px 16px,12px 12px,12px 12px;
+      background-position:18% 36%,18% 36%,74% 28%,74% 28%;
+      opacity:.16;
     }
   `;
   doc.head.appendChild(style);
@@ -99,7 +155,7 @@ function styleAndModifyGame() {
 
   const creatorBubble = doc.createElement('div');
   creatorBubble.className = 'bubble creator-bubble';
-  creatorBubble.textContent = 'Creator Names Here';
+  creatorBubble.innerHTML = '<span>Creator Names Here</span>';
 
   topUI.appendChild(titleBubble);
   topUI.appendChild(creatorBubble);
