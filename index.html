@@ -76,17 +76,8 @@ function styleAndModifyGame() {
       color:#ffb6d9;
       margin-bottom:4px;
     }
-    .stat-value {
-      font-size:17px;
-      font-weight:900;
-      line-height:1.05;
-    }
-    .stat-subvalue {
-      margin-top:4px;
-      font-size:11px;
-      font-weight:700;
-      color:#eadde4;
-    }
+    .stat-value { font-size:17px; font-weight:900; line-height:1.05; }
+    .stat-subvalue { margin-top:4px; font-size:11px; font-weight:700; color:#eadde4; }
     .load-bar {
       width:100%;
       height:8px;
@@ -96,11 +87,7 @@ function styleAndModifyGame() {
       border:1px solid rgba(255,220,235,.7);
       background:rgba(255,255,255,.13);
     }
-    .load-bar-fill {
-      width:0%;
-      height:100%;
-      background:linear-gradient(90deg,#ffb6d9,#ff75b8);
-    }
+    .load-bar-fill { width:0%; height:100%; background:linear-gradient(90deg,#ffb6d9,#ff75b8); }
 
     .top-ui {
       display:flex;
@@ -227,13 +214,17 @@ function styleAndModifyGame() {
       color:#ffe5f1;
       text-shadow:0 0 9px rgba(255,182,217,.85);
     }
-    .how-to-body {
+    .how-to-body,
+    .end-night-body {
       max-width:590px;
       margin:8px auto 30px;
-      font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;
-      color:#f3eadf;
+      font-family:Arial,Helvetica,sans-serif;
+      font-size:17px;
+      line-height:1.55;
+      color:#fff4fa;
       position:relative;
       z-index:4;
+      text-shadow:0 1px 2px rgba(0,0,0,.8);
     }
     .play-button {
       appearance:none;
@@ -319,6 +310,46 @@ function styleAndModifyGame() {
   `;
   stage.appendChild(statsPanel);
 
+  const starChars = ['✦','✧','★','⋆'];
+
+  function addMenuStars(card, count = 52) {
+    for (let i = 0; i < count; i++) {
+      const s = doc.createElement('span');
+      s.className = 'menu-star';
+      s.textContent = starChars[Math.floor(Math.random()*starChars.length)];
+      s.style.left = (2 + Math.random()*96) + '%';
+      s.style.top = (2 + Math.random()*96) + '%';
+      s.style.fontSize = (9 + Math.random()*24) + 'px';
+      s.style.setProperty('--speed', (.42 + Math.random()*1.3) + 's');
+      s.style.setProperty('--opacity', (.4 + Math.random()*.6).toFixed(2));
+      s.style.setProperty('--rot', Math.floor(Math.random()*360) + 'deg');
+      s.style.setProperty('--scale', (.65 + Math.random()*1.4).toFixed(2));
+      card.appendChild(s);
+    }
+  }
+
+  let endScreenShown = false;
+  function showEndOfNight() {
+    if (endScreenShown) return;
+    endScreenShown = true;
+
+    const endOverlay = doc.createElement('div');
+    endOverlay.className = 'main-menu-overlay';
+    endOverlay.setAttribute('role','dialog');
+    endOverlay.setAttribute('aria-modal','true');
+    endOverlay.setAttribute('aria-label','End of Night');
+
+    const endCard = doc.createElement('div');
+    endCard.className = 'main-menu-card';
+    endCard.innerHTML = `
+      <div class="glitter-title main-menu-title">End of Night</div>
+      <div class="end-night-body">The night has ended. Your run through the dump is complete.</div>
+    `;
+    endOverlay.appendChild(endCard);
+    doc.body.appendChild(endOverlay);
+    addMenuStars(endCard);
+  }
+
   let elapsedGameHours = 0;
   const timeValue = statsPanel.querySelector('.time-value');
   const hoursLeftValue = statsPanel.querySelector('.hours-left-value');
@@ -340,6 +371,9 @@ function styleAndModifyGame() {
   function advanceGameTime() {
     elapsedGameHours += 2;
     updateTimeStat();
+    if (elapsedGameHours > 0 && timeValue.textContent === '7:00 PM') {
+      showEndOfNight();
+    }
   }
 
   updateTimeStat();
@@ -352,8 +386,6 @@ function styleAndModifyGame() {
       });
     });
   }
-
-  const starChars = ['✦','✧','★','⋆'];
 
   function addBubbleStars(el, count) {
     for (let i = 0; i < count; i++) {
@@ -421,20 +453,7 @@ function styleAndModifyGame() {
   `;
   menuOverlay.appendChild(menuCard);
   doc.body.appendChild(menuOverlay);
-
-  for (let i = 0; i < 52; i++) {
-    const s = doc.createElement('span');
-    s.className = 'menu-star';
-    s.textContent = starChars[Math.floor(Math.random()*starChars.length)];
-    s.style.left = (2 + Math.random()*96) + '%';
-    s.style.top = (2 + Math.random()*96) + '%';
-    s.style.fontSize = (9 + Math.random()*24) + 'px';
-    s.style.setProperty('--speed', (.42 + Math.random()*1.3) + 's');
-    s.style.setProperty('--opacity', (.4 + Math.random()*.6).toFixed(2));
-    s.style.setProperty('--rot', Math.floor(Math.random()*360) + 'deg');
-    s.style.setProperty('--scale', (.65 + Math.random()*1.4).toFixed(2));
-    menuCard.appendChild(s);
-  }
+  addMenuStars(menuCard);
 
   const playButton = menuCard.querySelector('.play-button');
   playButton.addEventListener('click', () => {
@@ -443,19 +462,7 @@ function styleAndModifyGame() {
       <div class="how-to-body">Click around the trash dump to inspect objects and discover what each piece of trash has to tell you.</div>
       <button class="play-button how-to-continue" type="button" aria-label="Start game">START GAME</button>
     `;
-    for (let i = 0; i < 52; i++) {
-      const s = doc.createElement('span');
-      s.className = 'menu-star';
-      s.textContent = starChars[Math.floor(Math.random()*starChars.length)];
-      s.style.left = (2 + Math.random()*96) + '%';
-      s.style.top = (2 + Math.random()*96) + '%';
-      s.style.fontSize = (9 + Math.random()*24) + 'px';
-      s.style.setProperty('--speed', (.42 + Math.random()*1.3) + 's');
-      s.style.setProperty('--opacity', (.4 + Math.random()*.6).toFixed(2));
-      s.style.setProperty('--rot', Math.floor(Math.random()*360) + 'deg');
-      s.style.setProperty('--scale', (.65 + Math.random()*1.4).toFixed(2));
-      menuCard.appendChild(s);
-    }
+    addMenuStars(menuCard);
     const continueButton = menuCard.querySelector('.how-to-continue');
     continueButton.addEventListener('click', () => {
       menuOverlay.classList.add('is-hidden');
