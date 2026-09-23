@@ -46,6 +46,62 @@ function styleAndModifyGame() {
       opacity:1 !important;
     }
 
+    .game-stats {
+      position:absolute;
+      top:12px;
+      right:12px;
+      z-index:8;
+      display:flex;
+      gap:8px;
+      align-items:stretch;
+      pointer-events:none;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    }
+    .stat-box {
+      min-width:142px;
+      box-sizing:border-box;
+      padding:9px 11px;
+      border:2px solid rgba(255,214,232,.9);
+      border-radius:14px;
+      background:rgba(31,27,31,.88);
+      color:#fff4fa;
+      box-shadow:0 3px 0 rgba(0,0,0,.38),0 0 10px rgba(255,182,217,.28);
+      text-shadow:0 1px 2px rgba(0,0,0,.8);
+    }
+    .stat-label {
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      color:#ffb6d9;
+      margin-bottom:4px;
+    }
+    .stat-value {
+      font-size:17px;
+      font-weight:900;
+      line-height:1.05;
+    }
+    .stat-subvalue {
+      margin-top:4px;
+      font-size:11px;
+      font-weight:700;
+      color:#eadde4;
+    }
+    .load-bar {
+      width:100%;
+      height:8px;
+      margin-top:7px;
+      overflow:hidden;
+      border-radius:999px;
+      border:1px solid rgba(255,220,235,.7);
+      background:rgba(255,255,255,.13);
+    }
+    .load-bar-fill {
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,#ffb6d9,#ff75b8);
+    }
+
     .top-ui {
       display:flex;
       justify-content:center;
@@ -230,7 +286,7 @@ function styleAndModifyGame() {
 
   const creatorBubble = doc.createElement('div');
   creatorBubble.className = 'bubble creator-bubble';
-  creatorBubble.innerHTML = '<span>Creator Names Here</span>';
+  creatorBubble.innerHTML = '<span>Tagline Here</span>';
 
   topUI.appendChild(titleBubble);
   topUI.appendChild(creatorBubble);
@@ -246,6 +302,56 @@ function styleAndModifyGame() {
 
   const status = doc.getElementById('status');
   if (status) description.insertAdjacentElement('beforebegin', status);
+
+  const statsPanel = doc.createElement('div');
+  statsPanel.className = 'game-stats';
+  statsPanel.innerHTML = `
+    <div class="stat-box carry-stat">
+      <div class="stat-label">Carry Load Left</div>
+      <div class="stat-value">0/30 Pounds</div>
+      <div class="load-bar" aria-hidden="true"><div class="load-bar-fill"></div></div>
+    </div>
+    <div class="stat-box time-stat">
+      <div class="stat-label">Time</div>
+      <div class="stat-value time-value">7:00 PM</div>
+      <div class="stat-subvalue hours-left-value">12 hours left until 7:00 AM</div>
+    </div>
+  `;
+  stage.appendChild(statsPanel);
+
+  let elapsedGameHours = 0;
+  const timeValue = statsPanel.querySelector('.time-value');
+  const hoursLeftValue = statsPanel.querySelector('.hours-left-value');
+
+  function formatGameTime(totalHour) {
+    const hour24 = ((totalHour % 24) + 24) % 24;
+    const suffix = hour24 >= 12 ? 'PM' : 'AM';
+    const hour12 = hour24 % 12 || 12;
+    return `${hour12}:00 ${suffix}`;
+  }
+
+  function updateTimeStat() {
+    const currentHour = 19 + elapsedGameHours;
+    const hoursLeft = Math.max(0, 12 - elapsedGameHours);
+    timeValue.textContent = formatGameTime(currentHour);
+    hoursLeftValue.textContent = `${hoursLeft} ${hoursLeft === 1 ? 'hour' : 'hours'} left until 7:00 AM`;
+  }
+
+  function advanceGameTime() {
+    elapsedGameHours += 2;
+    updateTimeStat();
+  }
+
+  updateTimeStat();
+
+  const gameCanvas = stage.querySelector('canvas');
+  if (gameCanvas && status) {
+    gameCanvas.addEventListener('click', () => {
+      requestAnimationFrame(() => {
+        if (status.textContent.trim().startsWith('You clicked:')) advanceGameTime();
+      });
+    });
+  }
 
   const starChars = ['✦','✧','★','⋆'];
 
