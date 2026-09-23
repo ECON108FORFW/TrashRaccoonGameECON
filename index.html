@@ -61,8 +61,13 @@ function styleAndModifyGame() {
       text-align:center;
       margin-top:8px;
     }
+    #status {
+      margin-top:10px;
+      margin-bottom:8px;
+      text-align:center;
+    }
     .description-bubble {
-      margin-top:12px;
+      margin-top:0;
       padding:14px 18px;
       text-align:left;
     }
@@ -107,6 +112,11 @@ function styleAndModifyGame() {
   description.className = 'bubble description-bubble';
   description.innerHTML = '<div class="description-label">Description</div><div class="description-content"></div>';
   stage.insertAdjacentElement('afterend', description);
+
+  const status = doc.getElementById('status');
+  if (status) {
+    description.insertAdjacentElement('beforebegin', status);
+  }
 
   const resize = () => {
     frame.style.height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight) + 'px';
