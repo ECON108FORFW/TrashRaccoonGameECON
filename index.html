@@ -20,6 +20,79 @@ function styleAndModifyGame() {
 
   const style = doc.createElement('style');
   style.textContent = `
+    html, body {
+      min-height:100%;
+      background:#222;
+    }
+    body {
+      position:relative;
+      overflow-x:hidden;
+      background-color:#222;
+      background-image:
+        radial-gradient(circle at 4% 8%, rgba(255,190,218,.98) 0 2px, transparent 3px),
+        radial-gradient(circle at 10% 22%, rgba(255,218,235,.95) 0 1.8px, transparent 3px),
+        radial-gradient(circle at 17% 43%, rgba(255,168,207,.94) 0 2.5px, transparent 3.6px),
+        radial-gradient(circle at 8% 64%, rgba(255,205,228,.96) 0 2px, transparent 3px),
+        radial-gradient(circle at 14% 84%, rgba(255,176,211,.98) 0 2.3px, transparent 3.3px),
+        radial-gradient(circle at 25% 12%, rgba(255,224,239,.95) 0 2px, transparent 3px),
+        radial-gradient(circle at 31% 31%, rgba(255,185,217,.98) 0 2.5px, transparent 3.5px),
+        radial-gradient(circle at 27% 58%, rgba(255,212,232,.95) 0 2px, transparent 3px),
+        radial-gradient(circle at 34% 78%, rgba(255,170,207,.96) 0 2.2px, transparent 3.2px),
+        radial-gradient(circle at 43% 7%, rgba(255,211,232,.95) 0 2px, transparent 3px),
+        radial-gradient(circle at 48% 26%, rgba(255,178,213,.98) 0 2.5px, transparent 3.5px),
+        radial-gradient(circle at 45% 49%, rgba(255,222,238,.95) 0 2px, transparent 3px),
+        radial-gradient(circle at 51% 71%, rgba(255,186,218,.98) 0 2.4px, transparent 3.4px),
+        radial-gradient(circle at 59% 89%, rgba(255,214,233,.96) 0 2px, transparent 3px),
+        radial-gradient(circle at 63% 14%, rgba(255,173,210,.98) 0 2.5px, transparent 3.5px),
+        radial-gradient(circle at 69% 35%, rgba(255,220,236,.96) 0 2px, transparent 3px),
+        radial-gradient(circle at 64% 61%, rgba(255,184,216,.98) 0 2.3px, transparent 3.3px),
+        radial-gradient(circle at 74% 81%, rgba(255,211,231,.96) 0 2px, transparent 3px),
+        radial-gradient(circle at 81% 9%, rgba(255,178,213,.98) 0 2.5px, transparent 3.5px),
+        radial-gradient(circle at 88% 27%, rgba(255,224,239,.96) 0 2px, transparent 3px),
+        radial-gradient(circle at 84% 51%, rgba(255,188,219,.98) 0 2.4px, transparent 3.4px),
+        radial-gradient(circle at 92% 70%, rgba(255,213,233,.96) 0 2px, transparent 3px),
+        radial-gradient(circle at 96% 90%, rgba(255,172,208,.98) 0 2.5px, transparent 3.5px);
+      background-size:100% 100%;
+      animation:backgroundPinkTwinkle 1.05s infinite alternate ease-in-out;
+    }
+    body::before,
+    body::after {
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+    }
+    body::before {
+      background-image:
+        linear-gradient(45deg, transparent 44%, rgba(255,184,216,.95) 47%, rgba(255,226,240,1) 50%, rgba(255,184,216,.95) 53%, transparent 56%),
+        linear-gradient(-45deg, transparent 44%, rgba(255,184,216,.95) 47%, rgba(255,226,240,1) 50%, rgba(255,184,216,.95) 53%, transparent 56%);
+      background-size:34px 34px,34px 34px;
+      background-position:6px 8px,6px 8px;
+      opacity:.38;
+      animation:backgroundSparkle .7s infinite alternate ease-in-out;
+    }
+    body::after {
+      background-image:
+        radial-gradient(circle, rgba(255,201,226,.92) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle, rgba(255,169,207,.88) 0 1.8px, transparent 2.8px),
+        radial-gradient(circle, rgba(255,224,239,.94) 0 1.4px, transparent 2.4px);
+      background-size:26px 26px,39px 39px,52px 52px;
+      background-position:0 0,11px 17px,23px 7px;
+      opacity:.82;
+      animation:backgroundDrift 2.2s linear infinite;
+    }
+    .wrap, .top-ui, .stage, #status, .description-bubble {
+      position:relative;
+      z-index:1;
+    }
+    .stage {
+      background:#222;
+    }
+    .stage canvas {
+      position:relative;
+      z-index:3;
+    }
     .top-ui {
       display:flex;
       justify-content:center;
@@ -98,7 +171,7 @@ function styleAndModifyGame() {
       line-height:1.4;
     }
 
-    /* louder light-pink glitter on UI only — game canvas remains untouched */
+    /* loud light-pink glitter on UI; game canvas remains untouched */
     .top-ui::before,
     .bubble::before,
     .bubble::after,
@@ -157,6 +230,18 @@ function styleAndModifyGame() {
     @keyframes pinkSparkle {
       from { opacity:.28; }
       to { opacity:.78; }
+    }
+    @keyframes backgroundPinkTwinkle {
+      from { background-color:#222; filter:brightness(1); }
+      to { background-color:#242024; filter:brightness(1.08); }
+    }
+    @keyframes backgroundSparkle {
+      from { opacity:.22; }
+      to { opacity:.56; }
+    }
+    @keyframes backgroundDrift {
+      from { background-position:0 0,11px 17px,23px 7px; }
+      to { background-position:26px 26px,50px 56px,75px 59px; }
     }
   `;
   doc.head.appendChild(style);
