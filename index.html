@@ -87,14 +87,7 @@ function styleAndModifyGame() {
       background-clip:text;
       -webkit-text-fill-color:transparent;
       -webkit-text-stroke:1px rgba(126,54,92,.75);
-      text-shadow:
-        0 1px 0 #fff,
-        0 2px 0 #ff9dca,
-        0 3px 0 #d85f9a,
-        0 0 5px rgba(255,255,255,.95),
-        0 0 10px rgba(255,182,217,.95),
-        0 0 18px rgba(255,105,180,.8),
-        2px 3px 0 rgba(78,38,58,.35);
+      text-shadow:0 1px 0 #fff,0 2px 0 #ff9dca,0 3px 0 #d85f9a,0 0 5px rgba(255,255,255,.95),0 0 10px rgba(255,182,217,.95),0 0 18px rgba(255,105,180,.8),2px 3px 0 rgba(78,38,58,.35);
       transform:rotate(-1.5deg) scaleX(1.05);
       filter:drop-shadow(0 0 5px rgba(255,182,217,.85));
     }
@@ -114,11 +107,7 @@ function styleAndModifyGame() {
       text-align:center;
       margin-top:8px;
     }
-    .creator-bubble span,
-    .description-bubble > * {
-      position:relative;
-      z-index:2;
-    }
+    .creator-bubble span,.description-bubble > * { position:relative; z-index:2; }
     #status {
       margin-top:10px;
       margin-bottom:8px;
@@ -128,21 +117,9 @@ function styleAndModifyGame() {
       padding:8px 12px;
       border-radius:16px;
     }
-    .description-bubble {
-      margin-top:0;
-      padding:14px 18px;
-      text-align:left;
-    }
-    .description-bubble .description-label {
-      font-weight:bold;
-      font-size:18px;
-      margin-bottom:8px;
-    }
-    .description-bubble .description-content {
-      min-height:48px;
-      color:#5d5241;
-      line-height:1.4;
-    }
+    .description-bubble { margin-top:0; padding:14px 18px; text-align:left; }
+    .description-bubble .description-label { font-weight:bold; font-size:18px; margin-bottom:8px; }
+    .description-bubble .description-content { min-height:48px; color:#5d5241; line-height:1.4; }
 
     .bubble-star {
       position:absolute;
@@ -170,11 +147,7 @@ function styleAndModifyGame() {
       transition:opacity .28s ease, visibility .28s ease;
       overflow:hidden;
     }
-    .main-menu-overlay.is-hidden {
-      opacity:0;
-      visibility:hidden;
-      pointer-events:none;
-    }
+    .main-menu-overlay.is-hidden { opacity:0; visibility:hidden; pointer-events:none; }
     .main-menu-card {
       width:min(760px,90vw);
       min-height:360px;
@@ -183,21 +156,12 @@ function styleAndModifyGame() {
       border:4px solid #ffb6d9;
       border-radius:38px;
       background:linear-gradient(180deg,rgba(56,38,52,.98),rgba(26,21,27,.98));
-      box-shadow:
-        0 0 0 6px rgba(255,182,217,.14),
-        0 0 35px rgba(255,128,190,.55),
-        0 0 80px rgba(255,182,217,.28),
-        0 18px 45px rgba(0,0,0,.62);
+      box-shadow:0 0 0 6px rgba(255,182,217,.14),0 0 35px rgba(255,128,190,.55),0 0 80px rgba(255,182,217,.28),0 18px 45px rgba(0,0,0,.62);
       text-align:center;
       position:relative;
       overflow:hidden;
     }
-    .main-menu-title {
-      font-size:72px;
-      line-height:.92;
-      margin:0 auto 28px;
-      max-width:680px;
-    }
+    .main-menu-title { font-size:72px; line-height:.92; margin:0 auto 28px; max-width:680px; }
     .menu-start-label {
       margin:8px 0 18px;
       font-size:18px;
@@ -206,6 +170,14 @@ function styleAndModifyGame() {
       letter-spacing:3px;
       color:#ffe5f1;
       text-shadow:0 0 9px rgba(255,182,217,.85);
+    }
+    .how-to-body {
+      max-width:590px;
+      margin:8px auto 30px;
+      font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;
+      color:#f3eadf;
+      position:relative;
+      z-index:4;
     }
     .play-button {
       appearance:none;
@@ -218,27 +190,14 @@ function styleAndModifyGame() {
       letter-spacing:1.5px;
       color:#54223d;
       background:linear-gradient(180deg,#ffeaf4 0%,#ffb6d9 44%,#ff8fc3 100%);
-      box-shadow:
-        0 0 0 5px rgba(255,182,217,.16),
-        0 0 18px rgba(255,182,217,.8),
-        0 0 38px rgba(255,105,180,.5),
-        0 7px 0 #a84e7c;
+      box-shadow:0 0 0 5px rgba(255,182,217,.16),0 0 18px rgba(255,182,217,.8),0 0 38px rgba(255,105,180,.5),0 7px 0 #a84e7c;
       transform:translateY(0);
       transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
       position:relative;
       z-index:4;
     }
-    .play-button:hover {
-      filter:brightness(1.08) saturate(1.15);
-      transform:translateY(-2px) scale(1.03);
-    }
-    .play-button:active {
-      transform:translateY(5px);
-      box-shadow:
-        0 0 0 4px rgba(255,182,217,.14),
-        0 0 16px rgba(255,182,217,.72),
-        0 2px 0 #a84e7c;
-    }
+    .play-button:hover { filter:brightness(1.08) saturate(1.15); transform:translateY(-2px) scale(1.03); }
+    .play-button:active { transform:translateY(5px); box-shadow:0 0 0 4px rgba(255,182,217,.14),0 0 16px rgba(255,182,217,.72),0 2px 0 #a84e7c; }
     .menu-star {
       position:absolute;
       pointer-events:none;
@@ -250,18 +209,9 @@ function styleAndModifyGame() {
       line-height:1;
     }
 
-    @keyframes starTwinkle {
-      from { opacity:.28; filter:brightness(.9); transform:rotate(var(--rot)) scale(calc(var(--scale) * .72)); }
-      to   { opacity:1; filter:brightness(1.5); transform:rotate(var(--rot)) scale(calc(var(--scale) * 1.28)); }
-    }
-    @keyframes bubbleStarTwinkle {
-      from { opacity:.35; filter:brightness(1); }
-      to   { opacity:1; filter:brightness(1.45); }
-    }
-    @keyframes menuStarTwinkle {
-      from { opacity:.25; filter:brightness(.9); }
-      to { opacity:1; filter:brightness(1.65); }
-    }
+    @keyframes starTwinkle { from { opacity:.28; filter:brightness(.9); transform:rotate(var(--rot)) scale(calc(var(--scale) * .72)); } to { opacity:1; filter:brightness(1.5); transform:rotate(var(--rot)) scale(calc(var(--scale) * 1.28)); } }
+    @keyframes bubbleStarTwinkle { from { opacity:.35; filter:brightness(1); } to { opacity:1; filter:brightness(1.45); } }
+    @keyframes menuStarTwinkle { from { opacity:.25; filter:brightness(.9); } to { opacity:1; filter:brightness(1.65); } }
   `;
   doc.head.appendChild(style);
 
@@ -318,17 +268,9 @@ function styleAndModifyGame() {
   [titleBubble, creatorBubble, description].forEach(el => addBubbleStars(el, 18));
   if (status) addBubbleStars(status, 12);
 
-  function clearBackgroundStars() {
-    doc.querySelectorAll('.pink-star').forEach(n => n.remove());
-  }
-
-  function rectsToAvoid() {
-    return [stage, titleBubble, creatorBubble, description, status].filter(Boolean).map(el => el.getBoundingClientRect());
-  }
-
-  function isInsideAvoid(x, y, rects) {
-    return rects.some(r => x >= r.left - 8 && x <= r.right + 8 && y >= r.top - 8 && y <= r.bottom + 8);
-  }
+  function clearBackgroundStars() { doc.querySelectorAll('.pink-star').forEach(n => n.remove()); }
+  function rectsToAvoid() { return [stage, titleBubble, creatorBubble, description, status].filter(Boolean).map(el => el.getBoundingClientRect()); }
+  function isInsideAvoid(x, y, rects) { return rects.some(r => x >= r.left - 8 && x <= r.right + 8 && y >= r.top - 8 && y <= r.bottom + 8); }
 
   function scatterBackgroundStars() {
     clearBackgroundStars();
@@ -369,7 +311,7 @@ function styleAndModifyGame() {
   menuCard.innerHTML = `
     <div class="glitter-title main-menu-title">Treasure Through Trash</div>
     <div class="menu-start-label">Start Game</div>
-    <button class="play-button" type="button" aria-label="Play Treasure Through Trash">▶ PLAY</button>
+    <button class="play-button" type="button" aria-label="Open how to play">▶ PLAY</button>
   `;
   menuOverlay.appendChild(menuCard);
   doc.body.appendChild(menuOverlay);
@@ -390,15 +332,34 @@ function styleAndModifyGame() {
 
   const playButton = menuCard.querySelector('.play-button');
   playButton.addEventListener('click', () => {
-    menuOverlay.classList.add('is-hidden');
-    setTimeout(() => menuOverlay.remove(), 320);
+    menuCard.innerHTML = `
+      <div class="glitter-title main-menu-title">How to Play</div>
+      <div class="how-to-body">Click around the trash dump to inspect objects and discover what each piece of trash has to tell you.</div>
+      <button class="play-button how-to-continue" type="button" aria-label="Start game">START GAME</button>
+    `;
+    for (let i = 0; i < 52; i++) {
+      const s = doc.createElement('span');
+      s.className = 'menu-star';
+      s.textContent = starChars[Math.floor(Math.random()*starChars.length)];
+      s.style.left = (2 + Math.random()*96) + '%';
+      s.style.top = (2 + Math.random()*96) + '%';
+      s.style.fontSize = (9 + Math.random()*24) + 'px';
+      s.style.setProperty('--speed', (.42 + Math.random()*1.3) + 's');
+      s.style.setProperty('--opacity', (.4 + Math.random()*.6).toFixed(2));
+      s.style.setProperty('--rot', Math.floor(Math.random()*360) + 'deg');
+      s.style.setProperty('--scale', (.65 + Math.random()*1.4).toFixed(2));
+      menuCard.appendChild(s);
+    }
+    const continueButton = menuCard.querySelector('.how-to-continue');
+    continueButton.addEventListener('click', () => {
+      menuOverlay.classList.add('is-hidden');
+      setTimeout(() => menuOverlay.remove(), 320);
+    });
+    requestAnimationFrame(() => continueButton.focus());
   });
   requestAnimationFrame(() => playButton.focus());
 
-  const resize = () => {
-    frame.style.height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight) + 'px';
-  };
-
+  const resize = () => { frame.style.height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight) + 'px'; };
   resize();
   scatterBackgroundStars();
   new ResizeObserver(() => { resize(); scatterBackgroundStars(); }).observe(doc.body);
