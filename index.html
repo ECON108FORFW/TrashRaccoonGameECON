@@ -38,6 +38,13 @@ function styleAndModifyGame() {
     .wrap, .top-ui, .stage, #status, .description-bubble { position:relative; z-index:2; }
     .stage { background:#222; }
     .stage canvas { position:relative; z-index:3; }
+    .stage .player,
+    .player {
+      z-index:5 !important;
+      display:block !important;
+      visibility:visible !important;
+      opacity:1 !important;
+    }
 
     .top-ui {
       display:flex;
