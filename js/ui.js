@@ -2,15 +2,13 @@ import { ITEMS, FACTORS } from './data.js';
 import { PEBBLES } from './config.js';
 import { gameState } from './game-state.js';
 import { $, esc, fill } from './utils.js';
-import { addBubbleStars } from './glitter.js';
 let estimateFn = () => 0;
 export function configureUI({ estimate }) { estimateFn = estimate; }
-export function friendImg(fr, size) { return `<img src="raccoon.png" alt="${esc(fr.name)}" style="filter:${fr.filter};transform:scaleX(-1);${size ? 'width:' + size : ''}">`; }
+export function friendImg(fr, size) { return `<img src="raccoon.png" alt="${esc(fr.name)}" style="filter:${fr.filter};${size ? 'width:' + size : ''}">`; }
 export function setStatus(html, cls = '') {
   const el = $('status');
   el.className = 'bubble' + (cls ? ' ' + cls : '');
   el.innerHTML = html;
-  addBubbleStars(el, 8);
 }
 export function renderUI() {
   const S = gameState.session;
@@ -34,5 +32,4 @@ export function renderUI() {
   $('wrapBtn').disabled = !S.sel;
   $('wrapBtn').textContent = S.sel ? `🎁 Wrap the ${ITEMS[S.sel].n.toLowerCase()}` : '🎁 Pick a gift to wrap';
   $('pebbleBtn').textContent = `Just give ${PEBBLES} pebbles`;
-  addBubbleStars($('roundBar'), 6);
 }
