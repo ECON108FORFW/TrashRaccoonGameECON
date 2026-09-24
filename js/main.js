@@ -4,7 +4,7 @@ import { renderStats } from './stats.js';
 import { initGlitter } from './glitter.js';
 import { configureOverlays, closeCard, showTitle, showHow, showEnd, showEconomicLesson } from './overlays.js';
 import { newGame, startNextNight, give, dig, noDigsMessage } from './gameplay.js';
-import { createSceneRenderer } from './renderer/scene.js';
+import { createSceneRenderer } from './renderer/scene.js?v=night-skies-v5';
 
 configureOverlays({
   how: showHow,
