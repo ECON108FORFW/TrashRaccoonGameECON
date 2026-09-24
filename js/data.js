@@ -29,9 +29,9 @@ export const JUNK=[
   {e:'🦴',n:'a chicken bone',t:'A chicken bone. Picked bare.'},
 ];
 export const FRIENDS=[
-  {name:'Pip',role:'your best friend',pron:'them',intro:'You and Pip have shared a dumpster since you were kits. If anyone can find Pip the perfect gift, it’s you.',clues:3,vague:false,junk:0,digs:6,taste:[.8,1.25],pebbleHearts:1,filter:'none',acc:'',pebbleLine:'“Pebbles? From you? …Oh. Okay. Thanks.”'},
-  {name:'Nib',role:'your cousin',pron:'them',intro:'You see Nib at family gatherings. You know… some stuff. Probably.',clues:1,vague:false,junk:2,digs:5,taste:[.6,1.5],pebbleHearts:1,filter:'hue-rotate(30deg) saturate(1.4) brightness(1.05)',acc:'',pebbleLine:'“Cool. Pebbles. …Thanks, I guess.”'},
-  {name:'Great-Aunt Marlo',short:'Marlo',role:'your great-aunt',pron:'her',intro:'You met Great-Aunt Marlo once. She pinched your cheek and called you by your cousin’s name.',clues:0,vague:true,junk:2,digs:5,taste:[.4,1.8],pebbleHearts:2,filter:'grayscale(.85) sepia(.35) brightness(1.1)',acc:'',pebbleLine:'“Pebbles! How sensible, dear. I’ll pick something out myself.”'},
+  {name:'Pip',role:'your best friend',pron:'them',intro:'You and Pip have shared a dumpster since you were kits. If anyone can find Pip the perfect gift, it’s you.',clues:3,vague:false,junk:0,digs:6,taste:[.8,1.25],pebbleHearts:1,filter:'none',pebbleLine:'“Pebbles? From you? …Oh. Okay. Thanks.”'},
+  {name:'Nib',role:'your cousin',pron:'them',intro:'You see Nib at family gatherings. You know… some stuff. Probably.',clues:1,vague:false,junk:2,digs:5,taste:[.6,1.5],pebbleHearts:1,filter:'hue-rotate(30deg) saturate(1.4) brightness(1.05)',pebbleLine:'“Cool. Pebbles. …Thanks, I guess.”'},
+  {name:'Great-Aunt Marlo',short:'Marlo',role:'your great-aunt',pron:'her',intro:'You met Great-Aunt Marlo once. She pinched your cheek and called you by your cousin’s name.',clues:0,vague:true,junk:2,digs:5,taste:[.4,1.8],pebbleHearts:2,filter:'grayscale(.85) sepia(.35) brightness(1.1)',pebbleLine:'“Pebbles! How sensible, dear. I’ll pick something out myself.”'},
 ];
 export const SPOTS=[
   {x:40,y:336,w:132,h:142,t:'bag'},{x:250,y:296,w:84,h:62,t:'box'},{x:196,y:404,w:112,h:82,t:'box'},
