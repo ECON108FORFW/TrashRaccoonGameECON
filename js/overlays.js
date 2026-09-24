@@ -32,7 +32,7 @@ export function showTitle() {
 }
 
 export function showHow() {
-  openCard(`<div class="glitter-title">How to Play</div><p class="how-to-body">Three raccoons need gifts across three nights. Each night runs from <b>7:00 PM to 7:00 AM</b>.</p><p class="how-to-body">Some trash is a <b>gift</b>. Some trash is a <b>clue</b>. Every dig advances the clock by two hours.</p><p class="how-to-body">At 7:00 AM, the night ends automatically. If you gave a gift, you’ll see how it went. If you didn’t, your friend will notice.</p><button class="btn big" data-go="start">START GAME</button>`, 52);
+  openCard(`<div class="glitter-title">How to Play</div><p class="how-to-body">Three raccoons need gifts across three nights. Each night runs from <b>7:00 PM to 7:00 AM</b>.</p><p class="how-to-body">Some trash is a <b>gift</b>. Some trash is a <b>clue</b>. Every dig advances the clock by two hours.</p><p class="how-to-body">You can give only <b>one gift per night</b>. Once you give it and dismiss the result, the next night begins immediately. If you reach 7:00 AM without giving anything, the night ends automatically.</p><button class="btn big" data-go="start">START GAME</button>`, 52);
 }
 
 export function showIntro() {
@@ -47,7 +47,9 @@ export function showReveal(r) {
   const why = r.kind === 'pebbles'
     ? `<div class="why"><b>Why?</b><ul><li>Pebbles are worth exactly what you paid — to anyone. No guessing needed.</li><li>${r.hearts >= 2 ? `But from a relative you barely know? ${esc(X)} seems fine with it.` : `But from someone who’s supposed to know ${esc(X)}? It stings a little.`}</li></ul></div>`
     : `<div class="why"><b>Why was it worth ${r.worth} to ${esc(X)}?</b><ul>${r.why.join('')}</ul></div>`;
-  openCard(`${portrait(fr)}<div class="quote">${esc(r.line)}</div><div class="tag"><div class="gift">${r.e} ${esc(r.n)}</div><div class="paid">You paid: <s>${r.cost} pebbles</s></div><div class="worth">worth to me: ${r.worth} — ${esc(X)}</div></div>${gapLine}<div class="hearts">${hearts}</div>${why}<button class="btn big" data-go="close">Back to the night</button>`, 26);
+  const lastNight = S.round === 2;
+  const buttonText = lastNight ? 'See Final Tally →' : 'Next Night →';
+  openCard(`${portrait(fr)}<div class="quote">${esc(r.line)}</div><div class="tag"><div class="gift">${r.e} ${esc(r.n)}</div><div class="paid">You paid: <s>${r.cost} pebbles</s></div><div class="worth">worth to me: ${r.worth} — ${esc(X)}</div></div>${gapLine}<div class="hearts">${hearts}</div>${why}<button class="btn big" data-go="afterGift">${buttonText}</button>`, 26);
 }
 
 export function showNightSummary(summary) {
