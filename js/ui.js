@@ -1,4 +1,4 @@
-import { ITEMS, FACTORS } from './data.js';
+import { ITEMS, FACTORS } from './data.js?v=no-accessories';
 import { PEBBLES } from './config.js';
 import { gameState } from './game-state.js';
 import { $, esc, fill } from './utils.js';
