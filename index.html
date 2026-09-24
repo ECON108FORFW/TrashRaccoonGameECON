@@ -7,11 +7,15 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦝</text></svg>">
 <meta name="description" content="One raccoon. One junkyard. Three gifts before sunrise.">
 <link rel="stylesheet" href="css/game.css">
+<link rel="stylesheet" href="css/title-mascot.css">
 </head>
 <body>
 <div class="wrap" id="game-ui">
   <div class="top-ui">
-    <div class="bubble title-bubble"><h1 class="glitter-title">Treasure Through Trash</h1><div class="made-with-ai">Made with AI</div></div>
+    <div class="bubble title-bubble title-with-mascot">
+      <div class="title-copy"><h1 class="glitter-title">Treasure Through Trash</h1><div class="made-with-ai">Made with AI</div></div>
+      <img class="title-raccoon" src="raccoon.png" alt="Raccoon mascot">
+    </div>
     <div class="bubble creator-bubble"><span>Tagline Here</span></div>
   </div>
 
@@ -19,11 +23,6 @@
 
   <div class="stage">
     <div class="game-stats" aria-label="Game stats">
-      <div class="stat-box carry-stat">
-        <div class="stat-label">Carry Load Left</div>
-        <div class="stat-value">0/30 Pounds</div>
-        <div class="load-bar" aria-hidden="true"><div class="load-bar-fill"></div></div>
-      </div>
       <div class="stat-box time-stat">
         <div class="stat-label">Time</div>
         <div class="stat-value" id="timeValue">7:00 PM</div>
@@ -31,7 +30,6 @@
       </div>
     </div>
     <canvas id="game" width="900" height="550" aria-label="Junkyard. Tap trash to dig."></canvas>
-    <div class="player"><img src="raccoon.png" alt="You, a raccoon"><div>You</div></div>
   </div>
 
   <div class="bubble" id="status"></div>
