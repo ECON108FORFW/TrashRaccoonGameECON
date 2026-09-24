@@ -22,7 +22,7 @@ export function closeCard() {
 }
 
 function portrait(fr) {
-  return `<div class="portrait">${friendImg(fr)}${fr.acc ? `<span class="acc" style="${fr.acc === '👓' ? 'left:36%;top:14%;font-size:34px' : 'left:34%;top:-14%'}">${fr.acc}</span>` : ''}</div>`;
+  return `<div class="portrait">${friendImg(fr)}</div>`;
 }
 
 export function showTitle() {
