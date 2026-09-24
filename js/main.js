@@ -11,6 +11,11 @@ configureOverlays({
   start: () => { closeCard(); newGame(); },
   close: closeCard,
   nextNight: () => { closeCard(); startNextNight(); },
+  afterGift: () => {
+    closeCard();
+    if (gameState.session?.round >= 2) showEnd();
+    else startNextNight();
+  },
   end: showEnd,
   again: () => { closeCard(); newGame(); },
 });
