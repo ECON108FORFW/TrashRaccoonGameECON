@@ -4,7 +4,7 @@ import { gameState, resetGameState } from './game-state.js';
 import { has, rand, pick, shuffle, fill, $, esc } from './utils.js';
 import { renderUI, setStatus, configureUI } from './ui.js?v=no-accessories';
 import { resetStats, resetNightClock, advanceGameTime } from './stats.js';
-import { showIntro, showReveal } from './overlays.js?v=economic-lesson-exact-20260924';
+import { showIntro, showReveal } from './overlays.js';
 
 export function valueOf(id,factorSet,taste){const it=ITEMS[id];let m=1;factorSet.forEach(f=>{m*=FACTORS[f].eff(it,factorSet);});if(taste&&taste.item===id)m*=taste.mult;return Math.max(0,Math.round(it.p*m));}
 export function estimate(id){const S=gameState.session;return valueOf(id,S.known,null);}
