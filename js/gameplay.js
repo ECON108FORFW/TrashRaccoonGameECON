@@ -60,7 +60,7 @@ export function dig(tile){
   advanceGameTime(sunriseReached);
 }
 
-function reactionFor(r){if(r>=1.25)return '“WHERE did you even FIND this?! I love it!!”';if(r>=.95)return '“Oh! I really like this. Thank you!”';if(r>=.65)return '“Aw, that’s… nice. Thanks!”';if(r>=.35)return '“Oh! A… {item}. How… thoughtful.”';return '“…Is this from the bin behind the laundromat?”';}
+function reactionFor(r){if(r>=1.25)return '“Where did you even find this?! I love it!!”';if(r>=.95)return '“Oh! I really like this. Thank you!”';if(r>=.65)return '“Aw, that’s… nice. Thanks!”';if(r>=.35)return '“Oh! A… {item}. How… thoughtful.”';return '“…Is this from the bin behind the laundromat?”';}
 const heartsFor=v=>v>=7?3:v>=4?2:1;
 
 export function give(kind){
@@ -71,7 +71,7 @@ export function give(kind){
   else{
     const id=S.sel;if(!id)return;
     const it=ITEMS[id],v=trueValue(id),why=[];
-    S.factors.forEach(f=>{const m=FACTORS[f].eff(it,S.factors);if(Math.abs(m-1)>.01){let knew=S.known.has(f),txt=fill(FACTORS[f].know,fr);if(f==='cold'&&S.factors.has('bare')){txt=`A cold snap is coming AND ${X} has no bedding. Together, that made warm soft things worth way more`;knew=S.known.has('cold')&&S.known.has('bare');why.push(`<li class="${knew?'k':'u'}">${knew?'✔ You knew both':'✘ You didn’t know both'}: ${esc(txt)}.</li>`);return;}why.push(`<li class="${knew?'k':'u'}">${knew?'✔ You knew':'✘ You never found out'}: ${esc(txt)} <b>${m>1?'(made it worth more)':'(made it worth less)'}</b></li>`);}});
+    S.factors.forEach(f=>{const m=FACTORS[f].eff(it,S.factors);if(Math.abs(m-1)>.01){let knew=S.known.has(f),txt=fill(FACTORS[f].know,fr);if(f==='cold'&&S.factors.has('bare')){txt=`A cold snap is coming and ${X} has no bedding. Together, that made warm soft things worth way more`;knew=S.known.has('cold')&&S.known.has('bare');why.push(`<li class="${knew?'k':'u'}">${knew?'✔ You knew both':'✘ You didn’t know both'}: ${esc(txt)}.</li>`);return;}why.push(`<li class="${knew?'k':'u'}">${knew?'✔ You knew':'✘ You never found out'}: ${esc(txt)} <b>${m>1?'(made it worth more)':'(made it worth less)'}</b></li>`);}});
     if(S.taste.item===id)why.push(`<li class="s">🤫 No clue could have told you: ${esc(X)} ${S.taste.mult>1?'just secretly loves things like this':'privately isn’t a fan of things like this'}.</li>`);
     if(!why.length)why.push(`<li>Nothing special about it to ${esc(X)}. It was just a ${esc(it.n.toLowerCase())}.</li>`);
     res={who:fr.name,short:X,kind,id,e:it.e,n:it.n,cost:it.p,worth:v,hearts:heartsFor(v),line:reactionFor(v/it.p).replace('{item}',it.n.toLowerCase()),why};
