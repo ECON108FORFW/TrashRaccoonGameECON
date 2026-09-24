@@ -2,8 +2,8 @@ import { $ } from './utils.js';
 import { gameState } from './game-state.js';
 import { renderStats } from './stats.js';
 import { initGlitter } from './glitter.js';
-import { configureOverlays, closeCard, showTitle, showHow, showEnd } from './overlays.js';
-import { newGame, startNextNight, give, dig, noDigsMessage } from './gameplay.js';
+import { configureOverlays, closeCard, showTitle, showHow, showEnd } from './overlays.js?v=no-accessories';
+import { newGame, startNextNight, give, dig, noDigsMessage } from './gameplay.js?v=no-accessories';
 import { createSceneRenderer } from './renderer/scene.js';
 
 configureOverlays({
