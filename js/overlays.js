@@ -22,7 +22,7 @@ export function closeCard() {
 }
 
 function portrait(fr) {
-  return `<div class="portrait">${friendImg(fr)}</div>`;
+  return `<div class="portrait">${friendImg(fr,'110px')}</div>`;
 }
 
 export function showTitle() {
