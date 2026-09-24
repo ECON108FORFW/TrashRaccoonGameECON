@@ -4,7 +4,7 @@ import { gameState } from './game-state.js';
 import { $, esc, fill } from './utils.js';
 let estimateFn = () => 0;
 export function configureUI({ estimate }) { estimateFn = estimate; }
-export function friendImg(fr, size) { return `<img src="raccoon.png" alt="${esc(fr.name)}" style="filter:${fr.filter};${size ? 'width:' + size : ''}">`; }
+export function friendImg(fr, size = '46px') { return `<span role="img" aria-label="${esc(fr.name)} raccoon" style="display:inline-flex;align-items:center;justify-content:center;width:${size};height:${size};font-size:calc(${size} * .78);line-height:1;flex:none">🦝</span>`; }
 export function setStatus(html, cls = '') {
   const el = $('status');
   el.className = 'bubble' + (cls ? ' ' + cls : '');
