@@ -1,8 +1,8 @@
-import { ITEMS, FACTORS, VAGUE, JUNK, FRIENDS, SPOTS } from './data.js';
+import { ITEMS, FACTORS, VAGUE, JUNK, FRIENDS, SPOTS } from './data.js?v=no-accessories';
 import { PEBBLES } from './config.js';
 import { gameState, resetGameState } from './game-state.js';
 import { has, rand, pick, shuffle, fill, $, esc } from './utils.js';
-import { renderUI, setStatus, configureUI } from './ui.js';
+import { renderUI, setStatus, configureUI } from './ui.js?v=no-accessories';
 import { resetStats, resetNightClock, advanceGameTime } from './stats.js';
 import { showIntro, showReveal } from './overlays.js';
 
