@@ -13,10 +13,14 @@
 }
 
 .title-raccoon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: clamp(86px, 14vw, 138px);
-  height: auto;
+  height: clamp(86px, 14vw, 138px);
   flex: 0 0 auto;
-  object-fit: contain;
+  font-size: clamp(64px, 11vw, 112px);
+  line-height: 1;
   transform: rotate(3deg);
   filter:
     drop-shadow(3px 0 0 #ff75b8)
@@ -35,5 +39,7 @@
 
   .title-raccoon {
     width: clamp(72px, 20vw, 100px);
+    height: clamp(72px, 20vw, 100px);
+    font-size: clamp(54px, 16vw, 82px);
   }
 }
