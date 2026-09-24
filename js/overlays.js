@@ -1,6 +1,6 @@
 import { gameState } from './game-state.js';
 import { $, esc } from './utils.js';
-import { friendImg } from './ui.js';
+import { friendImg } from './ui.js?v=no-accessories';
 
 const actions = {};
 export function configureOverlays(map) { Object.assign(actions, map); }
