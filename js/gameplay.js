@@ -4,7 +4,7 @@ import { gameState, resetGameState } from './game-state.js';
 import { has, rand, pick, shuffle, fill, $, esc } from './utils.js';
 import { renderUI, setStatus, configureUI } from './ui.js';
 import { resetStats, resetNightClock, advanceGameTime } from './stats.js';
-import { showIntro, showReveal, showNightSummary, showEnd } from './overlays.js';
+import { showIntro, showReveal } from './overlays.js';
 
 export function valueOf(id,factorSet,taste){const it=ITEMS[id];let m=1;factorSet.forEach(f=>{m*=FACTORS[f].eff(it,factorSet);});if(taste&&taste.item===id)m*=taste.mult;return Math.max(0,Math.round(it.p*m));}
 export function estimate(id){const S=gameState.session;return valueOf(id,S.known,null);}
@@ -32,37 +32,18 @@ export function setupRound(){
   showIntro();
 }
 
-function endCurrentNight(){
-  const S=gameState.session;
-  if(!S || S.nightResolved) return;
-  S.nightResolved=true;
-  if(S.round===2){
-    if(!S.nightResult){
-      const X=S.fr.short||S.fr.name;
-      const missed={who:S.fr.name,short:X,kind:'missed',e:'—',n:'No gift',cost:0,worth:0,hearts:0,line:`${X} waited until sunrise, but you never brought a gift.`,why:[]};
-      S.results.push(missed);S.nightResult=missed;
-    }
-    showEnd();
-    return;
-  }
-  let summary;
-  if(S.nightResult){
-    summary={gaveGift:true,result:S.nightResult};
-  }else{
-    const X=S.fr.short||S.fr.name;
-    const missed={who:S.fr.name,short:X,kind:'missed',e:'—',n:'No gift',cost:0,worth:0,hearts:0,line:`${X} waited until sunrise, but you never brought a gift.`,why:[]};
-    S.results.push(missed);S.nightResult=missed;
-    summary={gaveGift:false,result:missed,message:`${X} waited for you all night. Sunrise came, and there was no gift. They’re disappointed.`};
-  }
-  showNightSummary(summary);
-}
-
 export function startNextNight(){
   const S=gameState.session;
   if(!S || S.round>=2) return;
   S.round++;
   resetNightClock();
   setupRound();
+}
+
+function sunriseReached(){
+  const S=gameState.session;
+  if(!S || S.nightResult) return;
+  setStatus('It’s <b>7:00 AM</b>. Digging is over, but you can still choose one of the gifts you found and give it before the night is resolved.','');
 }
 
 export function dig(tile){
@@ -73,9 +54,10 @@ export function dig(tile){
   else if(tile.kind==='clue'){const f=FACTORS[tile.f],before={};S.found.forEach(id=>before[id]=estimate(id));S.known.add(tile.f);S.newChip=tile.f;S.found.forEach(id=>{const d=estimate(id)-before[id];if(d)S.lastDelta[id]=d;});const moved=Object.keys(S.lastDelta).length;msg=`${f.clue.e} You found <span class="found-name">${f.clue.n}</span>. ${esc(fill(f.clue.t,fr))}`+(moved?' <b>Your gift shelf just reshuffled.</b>':'');cls='clue';}
   else if(tile.kind==='vague'){msg=`${VAGUE.e} You found <span class="found-name">${VAGUE.n}</span>. ${VAGUE.t}`;cls='clue';}
   else msg=`${tile.j.e} ${tile.j.t}`;
+  if(S.digs===0) msg += '<br><b>No digs left. Choose a gift from your shelf, then confirm it with the Wrap button.</b>';
   setStatus(msg,cls);
   renderUI();
-  advanceGameTime(endCurrentNight);
+  advanceGameTime(sunriseReached);
 }
 
 function reactionFor(r){if(r>=1.25)return '“WHERE did you even FIND this?! I love it!!”';if(r>=.95)return '“Oh! I really like this. Thank you!”';if(r>=.65)return '“Aw, that’s… nice. Thanks!”';if(r>=.35)return '“Oh! A… {item}. How… thoughtful.”';return '“…Is this from the bin behind the laundromat?”';}
@@ -83,12 +65,12 @@ const heartsFor=v=>v>=7?3:v>=4?2:1;
 
 export function give(kind){
   const S=gameState.session,fr=S.fr,X=fr.short||fr.name;
-  if(gameState.nightEnded) return;
-  if(S.nightResult){setStatus(`You already gave ${esc(X)} something tonight. Keep digging until sunrise.`,'');return;}
+  if(S.nightResult){setStatus(`You already gave ${esc(X)} something tonight.`,'');return;}
   let res;
   if(kind==='pebbles')res={who:fr.name,short:X,kind,e:'🪨',n:`${PEBBLES} pebbles`,cost:PEBBLES,worth:PEBBLES,hearts:fr.pebbleHearts,line:fr.pebbleLine,why:[]};
   else{
-    const id=S.sel,it=ITEMS[id],v=trueValue(id),why=[];
+    const id=S.sel;if(!id)return;
+    const it=ITEMS[id],v=trueValue(id),why=[];
     S.factors.forEach(f=>{const m=FACTORS[f].eff(it,S.factors);if(Math.abs(m-1)>.01){let knew=S.known.has(f),txt=fill(FACTORS[f].know,fr);if(f==='cold'&&S.factors.has('bare')){txt=`A cold snap is coming AND ${X} has no bedding. Together, that made warm soft things worth way more`;knew=S.known.has('cold')&&S.known.has('bare');why.push(`<li class="${knew?'k':'u'}">${knew?'✔ You knew both':'✘ You didn’t know both'}: ${esc(txt)}.</li>`);return;}why.push(`<li class="${knew?'k':'u'}">${knew?'✔ You knew':'✘ You never found out'}: ${esc(txt)} <b>${m>1?'(made it worth more)':'(made it worth less)'}</b></li>`);}});
     if(S.taste.item===id)why.push(`<li class="s">🤫 No clue could have told you: ${esc(X)} ${S.taste.mult>1?'just secretly loves things like this':'privately isn’t a fan of things like this'}.</li>`);
     if(!why.length)why.push(`<li>Nothing special about it to ${esc(X)}. It was just a ${esc(it.n.toLowerCase())}.</li>`);
@@ -98,6 +80,5 @@ export function give(kind){
 }
 
 export function noDigsMessage(){
-  if(gameState.nightEnded) return;
-  setStatus('No digs left. If the clock has not reached 7:00 AM yet, wait for the remaining time to pass through gameplay.','');
+  setStatus('No digs left. Choose a gift from your shelf, then confirm it with the Wrap button.','');
 }
